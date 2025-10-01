@@ -13,7 +13,6 @@ class Spider:
     queue=set()
     crawled=set()
 
-
     def __init__(self, project_name, base_url, domain_name):
         Spider.project_name=project_name
         Spider.base_url=base_url
