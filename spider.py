@@ -70,3 +70,4 @@ class Spider:
         set_to_file(Spider.queue, Spider.queue_file)
         set_to_file(Spider.crawled, Spider.crawled_file)
 
+# gonna completed in today, and try to deep understand all the code and the way to created
