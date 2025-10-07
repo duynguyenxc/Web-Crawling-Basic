@@ -6,4 +6,4 @@ from general import *
 
 PROJECT_NAME = 'books.toscrape'
 HOMEPAGE = 'http://books.toscrape.com'
-DOMAIN_NAME = get_sub_domain_name(HOMEPAGE)
+DOMAIN_NAME = get_domain_name(HOMEPAGE)
