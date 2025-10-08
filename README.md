@@ -4,44 +4,45 @@
 
 ----------------
 # Web crawling basic: Spider (pure standard library)
-Libraries used
 
-urllib.request / urlopen: fetch HTML over HTTP(S).
+* Libraries used:
 
-urllib.parse (urljoin, urlparse): normalize relative URLs to absolute; extract host/domain.
+- urllib.request / urlopen: fetch HTML over HTTP(S).
 
-html.parser.HTMLParser: event-driven (SAX) parser to capture <a href=...>.
+- urllib.parse (urljoin, urlparse): normalize relative URLs to absolute; extract host/domain.
 
-threading: multi-threading for I/O-bound work (many concurrent requests).
+- html.parser.HTMLParser: event-driven (SAX) parser to capture <a href=...>.
 
-queue.Queue: thread-safe queue (producer–consumer model for URLs to crawl).
+- threading: multi-threading for I/O-bound work (many concurrent requests).
 
-os / os.path: create the project directory; check/write state files.
+- queue.Queue: thread-safe queue (producer–consumer model for URLs to crawl).
 
-Notable techniques
+- os / os.path: create the project directory; check/write state files.
 
-Event-driven parsing (SAX): subclass HTMLParser, override handle_starttag to collect href quickly—lightweight and lower RAM than building the full DOM tree.
+* Notable techniques:
 
-Link normalization & filtering:
+- Event-driven parsing (SAX): subclass HTMLParser, override handle_starttag to collect href quickly—lightweight and lower RAM than building the full DOM tree.
 
-Use urljoin(...) to convert relative links to absolute.
+- Link normalization & filtering:
 
-Drop #fragment to avoid “virtual” duplicate URLs.
+      Use urljoin(...) to convert relative links to absolute.
 
-Filter by domain to limit the crawl scope.
+      Drop #fragment to avoid “virtual” duplicate URLs.
 
-Deduplication with set: both queue and crawled are sets → inherent dedupe, O(1) lookups.
+      Filter by domain to limit the crawl scope.
 
-Multithreading for I/O-bound tasks:
+- Deduplication with set: both queue and crawled are sets → inherent dedupe, O(1) lookups.
 
-Worker pool: N threads pull URLs from queue.Queue() and crawl.
+- Multithreading for I/O-bound tasks:
 
-Use queue.join() to synchronize the completion of a “batch” of work.
+     Worker pool: N threads pull URLs from queue.Queue() and crawl.
 
-Persistence (resumable):
+     Use queue.join() to synchronize the completion of a “batch” of work.
 
-queue.txt / crawled.txt store state → you can resume after stopping.
+- Persistence (resumable):
 
-Write in sorted order for stable logs/diffs.
+    queue.txt / crawled.txt store state → you can resume after stopping.
 
-Near-BFS traversal: frontier (queue) + visited (crawled) yields a breadth-first-like sweep, reducing revisits.
+    Write in sorted order for stable logs/diffs.
+
+- Near-BFS traversal: frontier (queue) + visited (crawled) yields a breadth-first-like sweep, reducing revisits.
