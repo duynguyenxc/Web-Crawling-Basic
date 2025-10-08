@@ -49,8 +49,8 @@ class Spider:
                 html_string = html_bytes.decode('utf-8')
             finder = LinkFinder(Spider.base_url, page_url)
             finder.feed(html_string)
-        except:
-            print('Error: can not crawl page')
+        except Exception as e :
+            print(str(e))
             return set()
         return finder.page_links()
 
@@ -69,5 +69,6 @@ class Spider:
     def update_files():
         set_to_file(Spider.queue, Spider.queue_file)
         set_to_file(Spider.crawled, Spider.crawled_file)
+
 
 
